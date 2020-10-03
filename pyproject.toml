@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "pygraphql"
+version = "0.1.0"
+description = ""
+authors = ["Ouail <ouail.bendidi@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+httpx = "^0.14.3"
+trio = { version = "^0.17.0", optional = true }
+graphql-core = "^3.1.2"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+flake8 = "^3.8.3"
+bandit = "^1.6.2"
+flake8-import-order = "^0.18.1"
+safety = "^1.9.0"
+flake8-bugbear = "^20.1.4"
+mypy = "^0.782"
+pytest = "^6.0.2"
+pytest-cov = "^2.10.1"
+coverage = {extras = ["toml"], version = "^5.3"}
+pytest-icdiff = "^0.5"
+pygments = "^2.7.1"
+
+[tool.poetry.extras]
+trio = ["trio"]
+
+[tool.coverage.paths]
+source = ["pygraphql"]
+
+[tool.coverage.run]
+branch = true
+source = ["pygraphql"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 50
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests"
+]
+
+[build-system]
+requires = ["poetry>=1.0"]
+build-backend = "poetry.masonry.api"
+
