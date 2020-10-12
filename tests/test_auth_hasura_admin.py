@@ -11,14 +11,14 @@ class Request:
 
 
 def test_HasuraAdminAuth_simple():
-    auth = HasuraAdminAuth(secret="blabla")
+    auth = HasuraAdminAuth(token="blabla")
     request = Request()
     request = next(auth.auth_flow(request))
     assert request.headers["x-hasura-admin-Secret"] == "blabla"
 
 
 def test_HasuraAdminAuth_env():
-    os.environ["HASURA_GRAPHQL_ADMIN_SECRET"] = "blibli"
+    os.environ["GRAPHQL_AUTH_TOKEN"] = "blibli"
     auth = HasuraAdminAuth()
     request = Request()
     request = next(auth.auth_flow(request))
@@ -26,6 +26,6 @@ def test_HasuraAdminAuth_env():
 
 
 def test_HasuraAdminAuth_assertion_error():
-    del os.environ["HASURA_GRAPHQL_ADMIN_SECRET"]
+    del os.environ["GRAPHQL_AUTH_TOKEN"]
     with pytest.raises(AssertionError):
-        auth = HasuraAdminAuth()
+        HasuraAdminAuth()

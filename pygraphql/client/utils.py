@@ -1,4 +1,5 @@
 import random
+from typing import Optional
 import asyncio
 
 try:
@@ -9,11 +10,21 @@ except ImportError:
     BACKEND = "asyncio"
 
 
-async def sleep(seconds: float) -> None:
-    if BACKEND == "trio":
-        await trio.sleep(seconds)
-    else:
+async def sleep(seconds: float, backend=None) -> None:
+    if backend == "asyncio" or BACKEND == "asyncio":
         await asyncio.sleep(seconds)
+    else:
+        await trio.sleep(seconds)
+
+
+class RetryError(Exception):
+    """Custom exception thrown when retry logic fails"""
+
+    def __init__(self, retries_count: int, last_exception: Optional[Exception]) -> None:
+        """update the Exception message to take into account the rety logic"""
+        message = "Failed {} retries: {}".format(retries_count, last_exception)
+        super().__init__(message)
+        self.last_exception = last_exception
 
 
 class RandomExponentialSleep:

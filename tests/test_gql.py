@@ -1,4 +1,4 @@
-from pygraphql import gql, InvalidQueryType
+from pygraphql import gql
 
 import pytest
 from graphql.error.syntax_error import GraphQLSyntaxError
@@ -13,7 +13,7 @@ def test_gql_syntax_error():
 
 def test_gql_invalid_query_type():
     query_string = 123
-    with pytest.raises(InvalidQueryType):
+    with pytest.raises(Exception):
         gql(query_string)
 
 

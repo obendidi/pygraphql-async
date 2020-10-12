@@ -1,5 +1,4 @@
-# This is an example .flake8 config, used when developing *Black* itself.
-
+# This is a .flake8 config, used when developing *Black* itself.
 [flake8]
 ignore = W503, E203, E221, C901, C408, E741, C407, E741
 max-line-length = 88

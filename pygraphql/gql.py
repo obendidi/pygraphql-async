@@ -1,7 +1,6 @@
 from graphql.language import DocumentNode
 from graphql.language.parser import parse
 from graphql.language.source import Source
-from .exceptions import InvalidQueryType
 
 
 def gql(query_string: str) -> DocumentNode:
@@ -22,7 +21,7 @@ def gql(query_string: str) -> DocumentNode:
         source = Source(query_string, "GraphQL request")
         return parse(source)
 
-    raise InvalidQueryType(
+    raise Exception(
         "Received incompatible query expected type 'str' recieved '{}'.".format(
             type(query_string)
         )

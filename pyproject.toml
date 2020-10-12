@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "pygraphql"
 version = "0.1.0"
-description = ""
+description = "An async python graphql client"
 authors = ["Ouail <ouail.bendidi@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-httpx = "^0.14.3"
+httpx = "=0.16.1"
 trio = { version = "^0.17.0", optional = true }
 graphql-core = "^3.1.2"
 
@@ -23,6 +23,10 @@ pytest-cov = "^2.10.1"
 coverage = {extras = ["toml"], version = "^5.3"}
 pytest-icdiff = "^0.5"
 pygments = "^2.7.1"
+respx = "=0.13.0"
+pytest-asyncio = "^0.14.0"
+pytest-trio = "^0.6.0"
+coloredlogs = "^14.0"
 
 [tool.poetry.extras]
 trio = ["trio"]
@@ -36,11 +40,11 @@ source = ["pygraphql"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 50
+fail_under = 45
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q"
+addopts = "-ra -q -vv --cov=pygraphql"
 testpaths = [
     "tests"
 ]
