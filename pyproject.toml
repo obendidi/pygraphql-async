@@ -5,7 +5,7 @@ description = "An async python graphql client"
 authors = ["Ouail <ouail.bendidi@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.1"
 httpx = "=0.16.1"
 trio = { version = "^0.17.0", optional = true }
 graphql-core = "^3.1.2"
@@ -27,6 +27,8 @@ respx = "=0.13.0"
 pytest-asyncio = "^0.14.0"
 pytest-trio = "^0.6.0"
 coloredlogs = "^14.0"
+pre-commit = "^2.7.1"
+isort = "^5.6.4"
 
 [tool.poetry.extras]
 trio = ["trio"]
@@ -49,7 +51,34 @@ testpaths = [
     "tests"
 ]
 
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+line_length=88
+multi_line_output = 3
+include_trailing_comma = true
+use_parentheses = true
+known_myself = "pygraphql"
+known_third_party = "trio,httpx,graphql"
+sections = "FUTURE,STDLIB,THIRDPARTY,MYSELF,FIRSTPARTY,LOCALFOLDER"
+default_section = "FIRSTPARTY"
+
+
 [build-system]
 requires = ["poetry>=1.0"]
 build-backend = "poetry.masonry.api"
-

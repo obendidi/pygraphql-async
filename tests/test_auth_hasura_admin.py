@@ -1,8 +1,8 @@
 import os
 
-import pytest
-
 from pygraphql.auth import HasuraAdminAuth
+
+import pytest
 
 
 class Request:

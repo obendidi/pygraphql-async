@@ -7,7 +7,7 @@ def gql(query_string: str) -> DocumentNode:
     """A gql parser of graphql queries
 
     Arguments:
-        query_string {str} -- query string to parse
+        query_string: query string to parse
 
     Raises:
         Exception: raises and exception when provided query is not of type string
@@ -15,7 +15,7 @@ def gql(query_string: str) -> DocumentNode:
         inconsistencies because schema is not provided)
 
     Returns:
-        [DocumentNode] -- ast parsed query
+        [DocumentNode]: ast parsed query
     """
     if isinstance(query_string, str):
         source = Source(query_string, "GraphQL request")

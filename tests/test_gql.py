@@ -1,8 +1,9 @@
+from graphql.error.syntax_error import GraphQLSyntaxError
+from graphql.language import DocumentNode
+
 from pygraphql import gql
 
 import pytest
-from graphql.error.syntax_error import GraphQLSyntaxError
-from graphql.language import DocumentNode
 
 
 def test_gql_syntax_error():

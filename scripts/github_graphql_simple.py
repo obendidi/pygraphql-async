@@ -1,11 +1,13 @@
-import os
-import logging
 import json
-import coloredlogs
+import logging
+import os
+
 import trio
 
 from pygraphql.auth import BaseAuth
 from pygraphql.client import BaseClientAsync
+
+import coloredlogs
 
 coloredlogs.install(level="DEBUG")
 logging.basicConfig(

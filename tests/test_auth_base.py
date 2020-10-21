@@ -1,8 +1,8 @@
 import os
 
-import pytest
-
 from pygraphql.auth import BaseAuth
+
+import pytest
 
 
 class Request:

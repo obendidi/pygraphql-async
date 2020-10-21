@@ -1,5 +1,6 @@
-from pygraphql.client.utils import RandomExponentialSleep
 import random
+
+from pygraphql.client.utils import RandomExponentialSleep
 
 
 def test_RandomExponentialSleep():

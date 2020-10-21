@@ -1,6 +1,6 @@
+import asyncio
 import random
 from typing import Optional
-import asyncio
 
 try:
     import trio
