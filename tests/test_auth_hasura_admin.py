@@ -1,8 +1,8 @@
 import os
 
-from pygraphql.auth import HasuraAdminAuth
-
 import pytest
+
+from pygraphql.auth import HasuraAdminAuth
 
 
 class Request:

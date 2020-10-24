@@ -1,13 +1,16 @@
 import logging
 import os
-from typing import Any, Union
+from typing import Any
 
 import httpx
-from graphql.execution import ExecutionResult
-from graphql.language.ast import DocumentNode
-from graphql.language.printer import print_ast
 
-from .utils import RandomExponentialSleep, RetryError, sleep
+from pygraphql.auth.base import BaseAuth
+from pygraphql.client.utils import (
+    ExecutionResult,
+    RandomExponentialSleep,
+    RetryError,
+    sleep,
+)
 
 
 class BaseClientAsync(httpx.AsyncClient):
@@ -38,12 +41,15 @@ class BaseClientAsync(httpx.AsyncClient):
             5.0  # https://www.python-httpx.org/advanced/#timeout-configuration
         )
 
+        if "auth" not in kwargs:
+            kwargs["auth"] = BaseAuth()
+
         super().__init__(**kwargs)
         self._logger = logging.getLogger(__name__)
 
     async def execute(
         self,
-        query: Union[str, DocumentNode],
+        query: str,
         variables: dict,
         max_tries: int = 5,
         random_exponential_sleep_multiplier: float = 1,
@@ -71,18 +77,12 @@ class BaseClientAsync(httpx.AsyncClient):
             RetryError: if there is still an error after retrying
 
         Returns:
-            ExecutionResult: result of the query as a NamedTuple
+            ExecutionResult: result of the query
         """
 
         retries_count = 0
 
-        # if gql query convert to str
-        if isinstance(query, DocumentNode):
-            query_str = print_ast(query)
-        else:
-            query_str = query
-
-        assert isinstance(query_str, str)
+        assert isinstance(query, str)
 
         sleeper = RandomExponentialSleep(
             multiplier=random_exponential_sleep_multiplier,
@@ -94,7 +94,7 @@ class BaseClientAsync(httpx.AsyncClient):
         last_exception = None
         while retries_count < max_tries:
             try:
-                payload = {"query": query_str, "variables": variables}
+                payload = {"query": query, "variables": variables}
                 kwargs: Any = {}
                 if timeout:
                     kwargs["timeout"] = timeout
@@ -115,8 +115,8 @@ class BaseClientAsync(httpx.AsyncClient):
                 old_timeout = timeout if timeout else self.default_timeout
                 timeout = old_timeout * 1.5
                 self._logger.warning(
-                    "Execution failed with a 'ReadTimeoutError', Retrying for the {} time \
-                     with a new timeout of {:0.2f}s (last_old={:0.2f}s)".format(
+                    "Execution failed with a 'ReadTimeoutError', Retrying for the {} \
+                     time with a new timeout of {:0.2f}s (last_old={:0.2f}s)".format(
                         retries_count, timeout, old_timeout
                     )
                 )
@@ -131,7 +131,7 @@ class BaseClientAsync(httpx.AsyncClient):
                         retries_count, timeout, old_timeout
                     )
                 )
-            except Exception as error:
+            except Exception as error:  # pylint: disable=broad-except
                 retries_count += 1
                 sleep_time = sleeper(retries_count)
                 last_exception = error  # type: ignore

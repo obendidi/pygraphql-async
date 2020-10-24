@@ -1,11 +1,9 @@
-from graphql.execution import ExecutionResult
-
-from pygraphql.client import BaseClientAsync
-from pygraphql.client.utils import RetryError
-
 import httpcore
 import pytest
 import respx
+
+from pygraphql.client import BaseClientAsync
+from pygraphql.client.utils import ExecutionResult, RetryError
 
 
 @respx.mock

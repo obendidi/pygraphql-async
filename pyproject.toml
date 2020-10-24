@@ -8,15 +8,12 @@ authors = ["Ouail <ouail.bendidi@gmail.com>"]
 python = "^3.6.1"
 httpx = "=0.16.1"
 trio = { version = "^0.17.0", optional = true }
-graphql-core = "^3.1.2"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
-flake8 = "^3.8.3"
 bandit = "^1.6.2"
 flake8-import-order = "^0.18.1"
 safety = "^1.9.0"
-flake8-bugbear = "^20.1.4"
 mypy = "^0.782"
 pytest = "^6.0.2"
 pytest-cov = "^2.10.1"
@@ -29,6 +26,8 @@ pytest-trio = "^0.6.0"
 coloredlogs = "^14.0"
 pre-commit = "^2.7.1"
 isort = "^5.6.4"
+pylint = "^2.6.0"
+nox = "^2020.8.22"
 
 [tool.poetry.extras]
 trio = ["trio"]
@@ -46,7 +45,7 @@ fail_under = 45
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q -vv --cov=pygraphql"
+addopts = "-ra -q -vv --cov=pygraphql --cov-report=term"
 testpaths = [
     "tests"
 ]
@@ -75,8 +74,7 @@ include_trailing_comma = true
 use_parentheses = true
 known_myself = "pygraphql"
 known_third_party = "trio,httpx,graphql"
-sections = "FUTURE,STDLIB,THIRDPARTY,MYSELF,FIRSTPARTY,LOCALFOLDER"
-default_section = "FIRSTPARTY"
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "MYSELF", "LOCALFOLDER"]
 
 
 [build-system]

@@ -1,6 +1,6 @@
 import asyncio
 import random
-from typing import Optional
+from typing import Any, Dict, Iterable, List, Optional
 
 try:
     import trio
@@ -11,6 +11,13 @@ except ImportError:
 
 
 async def sleep(seconds: float, backend=None) -> None:
+    """a sleep function that takes into account wether trio is installed or not
+
+    Args:
+        seconds: num seconds to sleep
+        backend (optional): force backend to use asyncio even if trio is installed.
+            Defaults to None.
+    """
     if backend == "asyncio" or BACKEND == "asyncio":
         await asyncio.sleep(seconds)
     else:
@@ -66,3 +73,50 @@ class RandomExponentialSleep:
         except OverflowError:
             return self.max_sleep
         return max(max(0, self.min_sleep), min(result, self.max_sleep))
+
+
+class ExecutionResult:
+    """The result of GraphQL execution.
+    - ``data`` is the result of a successful execution of the query.
+    - ``errors`` is included when any errors occurred as a non-empty list.
+    """
+
+    __slots__ = "data", "errors"
+
+    data: Optional[Dict[str, Any]]
+    errors: Optional[List[Any]]
+
+    def __init__(
+        self,
+        data: Optional[Dict[str, Any]] = None,
+        errors: Optional[List[Any]] = None,
+    ):
+        self.data = data
+        self.errors = errors
+
+    def __repr__(self) -> str:
+        name = self.__class__.__name__
+        return f"{name}(data={self.data!r}, errors={self.errors!r})"
+
+    def __iter__(self) -> Iterable[Any]:
+        return iter((self.data, self.errors))
+
+    @property
+    def formatted(self) -> Dict[str, Any]:
+        """Get execution result formatted according to the specification."""
+        return dict(data=self.data, errors=self.errors)
+
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, dict):
+            return other == dict(data=self.data, errors=self.errors)
+
+        if isinstance(other, tuple):
+            return other == (self.data, self.errors)
+        return (
+            isinstance(other, self.__class__)
+            and other.data == self.data
+            and other.errors == self.errors
+        )
+
+    def __ne__(self, other: Any) -> bool:
+        return not self == other

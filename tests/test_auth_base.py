@@ -1,8 +1,8 @@
 import os
 
-from pygraphql.auth import BaseAuth
-
 import pytest
+
+from pygraphql.auth import BaseAuth
 
 
 class Request:
