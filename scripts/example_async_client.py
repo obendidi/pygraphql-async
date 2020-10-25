@@ -39,8 +39,8 @@ async def main():
             }"""
 
     variables = {
-        "repo_owner": "bendidi",
-        "repo_name": "Tracking-with-darkflow",
+        "repo_owner": "encode",
+        "repo_name": "httpx",
         "num_last_issues": 3,
     }
 

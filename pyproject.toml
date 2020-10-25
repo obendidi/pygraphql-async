@@ -64,7 +64,7 @@ source = ["pygraphql"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 45
+fail_under = 70
 
 [tool.pytest.ini_options]
 minversion = "6.0"
