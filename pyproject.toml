@@ -1,8 +1,31 @@
 [tool.poetry]
-name = "pygraphql"
+name = "pygraphql-async"
 version = "0.1.0"
-description = "An async python graphql client"
+description = "Async graphql client"
 authors = ["Ouail <ouail.bendidi@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/bendidi/pygraphql"
+homepage = "https://github.com/bendidi/pygraphql"
+documentation = "https://github.com/bendidi/pygraphql"
+keywords = ["graphql", "client", "async"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+packages = [
+    { include = "pygraphql" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
