@@ -3,8 +3,6 @@ from typing import Any, Dict
 from pygraphql.client.base import BaseClientAsync
 from pygraphql.client.utils import ExecutionResult
 
-# from .utils import list_to_nested_dict, run_callable_on_variables_list
-
 
 class Query:
     """Class object of instanciating a query to be used in multiple instances"""
